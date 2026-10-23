@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tplkit"
+version = "0.1.0"
+description = "按 JSON 规格填充一份买来的 PPT 模板，并在渲染结果上校验版式（压字 / 压图 / 出界）。"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "python-pptx>=0.6.23",
+    "PyMuPDF>=1.23",
+]
+
+[project.scripts]
+tpl-inspect = "tplkit.inspect_template:cli"
+tpl-dump-slides = "tplkit.dump_slides:main"
+tpl-dump-spec = "tplkit.dump_spec:main"
+tpl-dump-detail = "tplkit.dump_detail:main"
+tpl-fill = "tplkit.fill_deck:main"
+tpl-render = "tplkit.render_deck:main"
+tpl-check = "tplkit.check_overlap:main"
+tpl-geom = "tplkit.dump_geom:main"
+tpl-spans = "tplkit.dump_spans:main"
+
+[tool.setuptools]
+packages = ["tplkit"]
