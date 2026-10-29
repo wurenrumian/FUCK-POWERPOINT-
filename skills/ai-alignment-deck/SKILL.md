@@ -6,8 +6,8 @@ compatibility: opencode
 metadata:
   repo: AI-alignment
   deliverable: 学号+姓名.pptx
-  source-of-truth: tmp/scripts/deck-fill.json
-  frozen: deck-v6
+  source-of-truth: deliverable/final.pptx
+  frozen: locked-2026-10-29
 ---
 
 # 大模型对齐课程汇报 —— 交付物工作指南
@@ -21,29 +21,32 @@ metadata:
 > ⚠️ 但工作目录 `tmp/` **不进版本库**（`.gitignore` 有 `/tmp/`）：填充规格、文稿、模板、素材都在那里。
 > 所以本 skill 里所有 `tmp/...` 路径只在作者本机（或拿到 `tmp/` 的人手上）成立。
 
-## 当前状态（v6 冻结）
+## 当前状态（2026-10-29 锁版）
 
-- 成品：`tmp/outputs/deck-filled-v6.pptx`（10 页）。`tmp/outputs/final.pptx` 是它的副本（哈希一致）。
-- **用户已明确：以 v6 收尾，不再改任何东西。** 改任何文字/版式之前必须先问清楚是否解冻。
-- 论点：口语版「直球进了分，变化球没有」；精确版「主流公开安全分数与真实攻击成本脱钩，水位由最弱环节决定」。
-- 未完成项：封面「学生：/ 导师：」待填学号姓名 → 交付时改名 `学号+姓名.pptx`；逐字稿约 5:40，
-  比 5 分钟预算长约 40 秒，需排练后按 `tmp/docs/deck/deck-v2.md` 第五节砍（P5 优先）。
+- 成品：**`deliverable/final.pptx`**（10 页，13,714,961 B，SHA-256 `922ab9d7…`）。
+  快照 `tmp/scratch/locked-2026-10-29.pptx`；锁版渲染 `tmp/scratch/out17/`（`tpl-check`：TEXT-TEXT 0、OUT-PAGE 0）。
+- **🔒 用户已锁版：不要改任何文字/版式。** 改之前必须先问清楚是否解锁。
+  唯一预计要解锁的动作是**填封面学号姓名**（然后重新记哈希 + 重跑渲染校验）。
+- **幻灯片上有什么，以 pptx 为准**。`tmp/scripts/deck-fill.json` 只覆盖到 v5，之后是三轮手工/脚本改动，
+  **规格已追不上成品，别再拿它重建**。
+- 论点：口语版「直球进了分，变化球没有」；精确版「主流公开安全分数与真实攻击成本脱钩，水位由最弱环节决定」
+  （这句已在 P10 收尾）。
+- 讲稿 `deliverable/deck-script.md` v1.3，1586 字 ≈ 6:29，**超 5 分钟预算约 1 分半**——锁版后唯一还能动的是稿子和嘴。
+- 未完成项：封面待填 → 交付时改名 `学号+姓名.pptx`；稿子要裁；实机放映校验。
 
-### ⚠️ 重建 v6 的两个已知坑（2026-10-23 核过）
+### ⚠️ 历史坑（只对 v5/v6 有意义，锁版后不会再触发）
 
-1. **v6 不是当前规格的干净产物。** 用 `tpl-fill` + 现在的 `deck-fill.json` 重建，10 页几何**只有一处不同**：
-   P4 的英文副标题 `Two approaches: RLHF and DPO` 会回到 `top = 1.30`（v6 里是 `0.45`）。
-   v6 是**被外部编辑器重存过**的（13.1 MB vs 重建的 28.7 MB），那处位置是手工挪的，规格里没有。
-   重建前先想清楚：要的是"和 v6 一模一样"，还是"要一份可复现的版本"。
-2. **`deck-fill.json` 里 P4 的 `"hideT": ["T0"]` 是空操作**（`hideT` 只认整数序号如 `[3]`，
-   写 `"T0"` 会静默不匹配）。所以那个副标题在 v5/v6/重建里**一直都在**，从没被隐藏过。
+1. **v6 不是规格的干净产物**：P4 英文副标题 `Two approaches: RLHF and DPO` 在 v6 里被手工挪到 `top = 0.45`，
+   规格重建会回到 `1.30`。
+2. **`deck-fill.json` 里 P4 的 `"hideT": ["T0"]` 是空操作**（`hideT` 只认整数序号如 `[3]`，字符串静默不匹配），
+   所以那个副标题从来没被隐藏过。
 
 ## 先看哪里
 
 | 我想要 | 打开 |
 |---|---|
-| 每页幻灯片上到底写了什么 | **`tmp/scripts/deck-fill.json`** ← 唯一事实来源 |
-| 每页要说什么话（逐字稿）、砍法、B 版（9 页）改法 | `tmp/docs/deck/deck-v2.md` |
+| 每页幻灯片上到底写了什么 | **`deliverable/final.pptx`** ← 唯一事实来源（`tmp/scripts/deck-fill.json` 只覆盖到 v5，别用） |
+| 每页要说什么话（逐字稿）、砍法、B 版（9 页）改法 | `tmp/docs/deck/deck-v2.md`；**要讲的稿子看交付版 `deliverable/deck-script.md`**（口语润色，同源） |
 | 每个数字的出处、脚注怎么写、不能说的话 | `tmp/docs/deck/sources.md` |
 | 被老师问住时怎么答（反证底稿） | `tmp/docs/deck/counter-arguments.md` |
 | 工具链本身（安装、9 个命令、规格 JSON 怎么写） | **`tools/pptx-fill/README.md`** |
@@ -53,7 +56,11 @@ metadata:
 | 素材出处与许可证 | `tmp/assets/README.md` + `manifest.json` |
 | 素材是怎么找来的、多 agent 协作记录 | `tmp/journal/2026-10-23.md` |
 
-## 改东西的标准三步（不能省第 3 步）
+## 改东西的标准三步（**锁版后只适用于新做的 PPT，不适用于本成品**）
+
+> ⛔ 本成品已锁版，下面这套**不要对它跑**：`tpl-fill` 会按过时的规格重建出一份和锁版不一样的 pptx。
+> 解锁后真要改，也是用 python-pptx **直接改 `deliverable/final.pptx`**（改文字/位置，别重存重建），
+> 然后 `tpl-render` + `tpl-check` 复核。下面的三步留给"从模板新做一份"的场景。
 
 ```powershell
 # 0) 一次性：把工具装进环境（包装在 tools/pptx-fill/）
